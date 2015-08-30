@@ -22,19 +22,21 @@ function toPlainObjectDeep(depth, obj) {
     
     newObj[initKey] = _.toPlainObject(obj[initKey])
     
-    $(
-      _.keys,
-      
-      _.each(function(key) {
-        if (depth > 1 && _.isObject(newObj[initKey][key])) {
-          newObj[initKey][key] = toPlainObjectDeep_(
-            depth - 1,
-            newObj[initKey],
-            key
-          )
-        }
-      })
-    )(newObj[initKey])
+    if (depth > 1) {
+      $(
+        _.keys,
+        
+        _.each(function(key) {
+          if (_.isObject(newObj[initKey][key])) {
+            newObj[initKey][key] = toPlainObjectDeep_(
+              depth - 1,
+              newObj[initKey],
+              key
+            )
+          }
+        })
+      )(newObj[initKey])
+    }
     
     return newObj[initKey]
   }
